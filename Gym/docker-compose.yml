@@ -2,7 +2,7 @@ version: "3.8"
 services:
   sql-server:
     image: mcr.microsoft.com/azure-sql-edge:latest
-    container_name: sql_universe_learning
+    container_name: sql_universe_gym
     user: root
     environment:
       ACCEPT_EULA: "Y"
@@ -25,12 +25,12 @@ services:
       sql-server:
         condition: service_healthy
     volumes:
-      - ./setup:/setup
+      - ./Setup:/setup
     command: >
       /bin/bash -c "
       echo 'Waiting for SQL Server to be ready...' &&
-      /opt/mssql-tools/bin/sqlcmd -S sql-server -U sa -P 'YourStrong!Password123' -d master -i /setup/01_schema.sql -i /setup/02_data.sql -i /setup/03_engine.sql -i /setup/04_solutions_mod01.sql -i /setup/05_solutions_mod02.sql -i /setup/06_solutions_mod03.sql -i /setup/07_solutions_mod04.sql &&
-      echo 'Database Setup Completed Successfully! You can now stop this container if you wish.'
+      /opt/mssql-tools/bin/sqlcmd -S sql-server -U sa -P 'YourStrong!Password123' -d master -i /setup/01_schema.sql -i /setup/02_data.sql &&
+      echo 'Gym Setup Completed! The Universe is ready for your experiments.'
       "
 
 volumes:
